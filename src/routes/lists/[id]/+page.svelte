@@ -1,5 +1,5 @@
 <script>
-	import Card from '../../../Card.svelte';
+	import Card from '$lib/Card.svelte';
 	let { data } = $props();
 
 	let remaining = $state(data.items);
