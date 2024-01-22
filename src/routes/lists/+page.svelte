@@ -4,6 +4,11 @@
 
 <h1>Lists</h1>
 
+<form method="POST">
+	<input name="listname" type="text" placeholder="new list" />
+	<button>Create!</button>
+</form>
+
 <nav>
 	<ul>
 		{#each data.list as list}
