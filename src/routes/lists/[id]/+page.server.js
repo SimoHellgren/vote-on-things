@@ -10,3 +10,29 @@ export async function load({ params }) {
         items: items ?? [],
     };
 }
+
+
+export const actions = {
+    default: async ({ request, params }) => {
+        const formData = await request.formData()
+        const newitems = formData.get("newitems").split("\n").filter(Boolean)
+
+        const { dbData, error } = await supabase.from("item").insert(newitems.map(item => ({
+            name: item,
+            list_id: params.id
+        })));
+
+        if (error) {
+            console.error(error);
+            return {
+                status: 500,
+                body: error,
+            };
+        }
+
+        return {
+            status: 200,
+            body: dbData,
+        };
+    }
+}

@@ -9,3 +9,9 @@
 {/each}
 
 <a href={`${data.list.id}/vote`}>Go to voting</a>
+
+<h2>Add items</h2>
+<form method="POST">
+	<textarea name="newitems" placeholder="add items (1 per line)"></textarea>
+	<button>Add</button>
+</form>
