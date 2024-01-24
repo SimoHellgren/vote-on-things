@@ -1,5 +1,6 @@
 <script>
 	import { enhance } from '$app/forms';
+	import { fade } from 'svelte/transition';
 
 	let { data } = $props();
 </script>
@@ -13,7 +14,7 @@
 </div>
 
 {#each data.items as item}
-	<div>
+	<div transition:fade={{ duration: 200 }}>
 		<span>{item.name}</span>
 		<form method="POST" use:enhance>
 			<input type="hidden" name="itemId" value={item.id} />
