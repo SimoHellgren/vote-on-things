@@ -1,4 +1,6 @@
 <script>
+	import { enhance } from '$app/forms';
+
 	let { data } = $props();
 </script>
 
@@ -13,7 +15,7 @@
 {#each data.items as item}
 	<div>
 		<span>{item.name}</span>
-		<form method="POST">
+		<form method="POST" use:enhance>
 			<input type="hidden" name="itemId" value={item.id} />
 			<button formaction="?/removeItem">delete</button>
 		</form>
@@ -21,7 +23,7 @@
 {/each}
 
 <h2>Add items</h2>
-<form method="POST" action="?/addItem">
+<form method="POST" action="?/addItem" use:enhance>
 	<textarea name="newitems" placeholder="add items (1 per line)"></textarea>
 	<button>Add</button>
 </form>

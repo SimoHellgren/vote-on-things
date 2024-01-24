@@ -1,10 +1,11 @@
 <script>
+	import { enhance } from '$app/forms';
 	export let data;
 </script>
 
 <h1>Lists</h1>
 
-<form method="POST">
+<form method="POST" use:enhance>
 	<input name="listname" type="text" placeholder="new list" />
 	<button>Create!</button>
 </form>
