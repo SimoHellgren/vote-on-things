@@ -14,6 +14,8 @@
 	}
 </script>
 
+<a href={`/lists/${data.list.id}`}>Back to list <i>{data.list.name}</i></a>
+
 {#if remaining.length}
 	<div>
 		<Card name={current.name} on:result={handleResult} />
