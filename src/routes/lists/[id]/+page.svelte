@@ -2,16 +2,42 @@
 	let { data } = $props();
 </script>
 
-<h2>Items in list {data.list.name}</h2>
+<div class="list-header">
+	<h2>Items in list {data.list.name}</h2>
+
+	<form method="POST" action="?/removeList">
+		<button>DELETE</button>
+	</form>
+</div>
 
 {#each data.items as item}
-	<p>{item.name}</p>
+	<div>
+		<span>{item.name}</span>
+		<form method="POST">
+			<input type="hidden" name="itemId" value={item.id} />
+			<button formaction="?/removeItem">delete</button>
+		</form>
+	</div>
 {/each}
 
-<a href={`${data.list.id}/vote`}>Go to voting</a>
-
 <h2>Add items</h2>
-<form method="POST">
+<form method="POST" action="?/addItem">
 	<textarea name="newitems" placeholder="add items (1 per line)"></textarea>
 	<button>Add</button>
 </form>
+
+<h2>Voting</h2>
+<a href={`${data.list.id}/vote`}>Tinder</a>
+
+<style>
+	form {
+		display: inline;
+	}
+
+	.list-header {
+		display: flex;
+		justify-content: start;
+		align-items: center;
+		gap: 1rem;
+	}
+</style>
