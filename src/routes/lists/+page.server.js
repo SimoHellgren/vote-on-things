@@ -1,7 +1,7 @@
-import { supabase } from "$lib/supabaseClient";
-
 export const actions = {
-    default: async ({ request }) => {
+    default: async ({ request, locals: { supabase, getSession } }) => {
+
+        const session = await getSession()
 
         const formData = await request.formData()
         const listname = formData.get("listname")
@@ -9,6 +9,7 @@ export const actions = {
         const { dbData, error } = await supabase.from("list").insert([
             {
                 name: listname,
+                owner: session.user.id
             },
         ]);
 
