@@ -28,6 +28,7 @@
 
 <nav>
 	<a href="/lists">Lists</a>
+	<a href="/auth">Login</a>
 </nav>
 
 <slot />
