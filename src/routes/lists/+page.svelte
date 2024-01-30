@@ -2,6 +2,9 @@
 	import { enhance } from '$app/forms';
 	import { fade } from 'svelte/transition';
 	export let data;
+
+	let { user, list } = data;
+	$: ({ user, list } = data);
 </script>
 
 <h1>Lists</h1>
@@ -13,7 +16,7 @@
 
 <nav>
 	<ul>
-		{#each data.list as list}
+		{#each list as list}
 			<li>
 				<a href={`/lists/${list.id}`} transition:fade={{ duration: 200 }}>{list.name}</a>
 			</li>
