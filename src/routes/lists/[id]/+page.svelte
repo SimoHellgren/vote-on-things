@@ -32,6 +32,20 @@
 <h2>Voting</h2>
 <a href={`${data.list.id}/vote`}>Tinder</a>
 
+<h2>Share</h2>
+<form method="POST" action="?/shareList" use:enhance>
+	<input type="email" name="email" placeholder="email" />
+	<button>Share</button>
+</form>
+
+<h2>Members</h2>
+<ul>
+	<li>{data.list.owner.email} (owner)</li>
+	{#each data.members as member}
+		<li>{member.email}</li>
+	{/each}
+</ul>
+
 <style>
 	form {
 		display: inline;
