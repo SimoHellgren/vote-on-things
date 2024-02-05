@@ -1,7 +1,14 @@
 import { redirect } from "@sveltejs/kit";
 
-export async function load({ params, locals: { supabase } }) {
-    const { data: items } = await supabase.from("item").select().eq('list_id', params.id);
+export async function load({ params, locals: { supabase, getSession } }) {
+    const session = await getSession();
+
+    const { data: items } = await supabase.from("item").select(`
+        id,
+        name,
+        owner:profiles(email)
+    `).eq('list_id', params.id);
+
     const { data: list } = await supabase.from("list").select(`
         id,
         name,
@@ -17,6 +24,7 @@ export async function load({ params, locals: { supabase } }) {
         list,
         members: members.map(m => m.member),
         items: items ?? [],
+        user: session.user
     };
 }
 
@@ -26,9 +34,12 @@ export const actions = {
         const formData = await request.formData();
         const newitems = formData.get("newitems").split("\n").filter(Boolean);
 
+        const session = await getSession();
+
         const { dbData, error } = await supabase.from("item").insert(newitems.map(item => ({
             name: item,
-            list_id: params.id
+            list_id: params.id,
+            owner: session.user.id,
         })));
 
         if (error) {

@@ -16,10 +16,13 @@
 {#each data.items as item}
 	<div transition:fade={{ duration: 200 }}>
 		<span>{item.name}</span>
-		<form method="POST" use:enhance>
-			<input type="hidden" name="itemId" value={item.id} />
-			<button formaction="?/removeItem">delete</button>
-		</form>
+		<!-- TODO: this permission check is a touch hacky -->
+		{#if item.owner.email === data.user.email}
+			<form method="POST" use:enhance>
+				<input type="hidden" name="itemId" value={item.id} />
+				<button formaction="?/removeItem">delete</button>
+			</form>
+		{/if}
 	</div>
 {/each}
 
