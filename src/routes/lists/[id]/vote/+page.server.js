@@ -19,19 +19,15 @@ export const actions = {
 
         const session = await getSession();
 
-
-        const record = {
-            item_id,
-            user_id: session.user.id,
-            result: result,
-        }
-
-        console.log(record)
         const { data, error } = await supabase.from("itemvote").insert(
-            record
-        );
+            {
+                item_id,
+                user_id: session.user.id,
+                result: result,
+            }
+        ).select().single();
 
-        console.log(data)
-        console.log(error)
+        return data
+
     }
 }
