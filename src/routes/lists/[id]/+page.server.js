@@ -6,7 +6,7 @@ export async function load({ params, locals: { supabase, getSession } }) {
     const { data: items } = await supabase.from("item").select(`
         id,
         name,
-        owner:profiles(email)
+        owner:profiles(id, email)
     `).eq('list_id', params.id);
 
     const { data: list } = await supabase.from("list").select(`
