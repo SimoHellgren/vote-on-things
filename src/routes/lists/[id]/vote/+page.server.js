@@ -16,7 +16,7 @@ export async function load({ params, locals: { supabase } }) {
 
 
 export const actions = {
-    default: async ({ request, locals: { supabase, getSession } }) => {
+    default: async ({ params, request, locals: { supabase, getSession } }) => {
         const formData = await request.formData();
         const result = formData.get("result");
         const item_id = formData.get("id");
@@ -28,8 +28,11 @@ export const actions = {
                 item_id,
                 user_id: session.user.id,
                 result: result,
+                list_id: params.id
             }
         ).select().single();
+
+        if (error) console.error(error);
 
         return data
 
