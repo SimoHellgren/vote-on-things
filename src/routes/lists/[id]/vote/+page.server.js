@@ -1,7 +1,11 @@
 export async function load({ params, locals: { supabase } }) {
     const { data: items } = await supabase.from("item").select().eq('list_id', params.id);
     const { data: list } = await supabase.from("list").select().eq('id', params.id).single();
-    const { data: votes } = await supabase.from("itemvote").select().eq('list_id', params.id);
+    const { data: votes } = await supabase.from("itemvote").select(`
+        item(id, name),
+        user:profiles(email),
+        result
+    `).eq('list_id', params.id);
 
     return {
         list,

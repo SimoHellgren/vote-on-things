@@ -1,7 +1,5 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
 	import { enhance } from '$app/forms';
-	const dispatch = createEventDispatcher();
 
 	let { id, name } = $props();
 </script>

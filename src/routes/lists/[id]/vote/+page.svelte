@@ -2,23 +2,18 @@
 	import Card from './Card.svelte';
 	let { data } = $props();
 
-	let remaining = $state(data.items);
-
-	const current = $derived(remaining[1]);
-
+	let items = $state(data.items);
 	let votes = $state(data.votes);
 
-	function handleResult(event) {
-		votes = [...votes, { item: current, vote: event.detail }];
-		remaining = remaining.slice(1);
-	}
+	let remaining = $derived(items.filter((item) => !votes.some((vote) => vote.item_id === item.id)));
+	let current = $derived(remaining[0]);
 </script>
 
 <a href={`/lists/${data.list.id}`}>Back to list <i>{data.list.name}</i></a>
 
 {#if remaining.length}
 	<div>
-		<Card id={current.id} name={current.name} on:result={handleResult} />
+		<Card id={current.id} name={current.name} />
 	</div>
 {:else}
 	All done!
@@ -26,6 +21,6 @@
 
 <h2>Votes</h2>
 
-{#each votes as { item, vote }}
-	<p>Voted {vote ? 'Yes' : 'No'} for {item.name}</p>
+{#each votes as { user, item, result }}
+	<p>{user.email} voted {result ? 'Yes' : 'No'} for {item.name}</p>
 {/each}
