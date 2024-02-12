@@ -2,8 +2,8 @@
 	import Card from './Card.svelte';
 	let { data } = $props();
 
-	let items = $state(data.items);
-	let votes = $state(data.votes);
+	let items = $derived(data.items);
+	let votes = $derived(data.votes);
 
 	let remaining = $derived(items.filter((item) => !votes.some((vote) => vote.item.id === item.id)));
 	let current = $derived(remaining[0]);
