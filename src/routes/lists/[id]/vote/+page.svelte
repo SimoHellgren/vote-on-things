@@ -1,5 +1,7 @@
 <script>
 	import Card from './Card.svelte';
+	import { fade } from 'svelte/transition';
+
 	let { data } = $props();
 
 	let items = $derived(data.items);
@@ -12,7 +14,7 @@
 <a href={`/lists/${data.list.id}`}>Back to list <i>{data.list.name}</i></a>
 
 {#if remaining.length}
-	<div>
+	<div transition:fade={{ duration: 200 }}>
 		<Card id={current.id} name={current.name} />
 	</div>
 {:else}
@@ -22,5 +24,7 @@
 <h2>Votes</h2>
 
 {#each votes as { user, item, result }}
-	<p>{user.email} voted {result ? 'Yes' : 'No'} for {item.name}</p>
+	<p transition:fade={{ duration: 200 }}>
+		{user.email} voted {result ? 'Yes' : 'No'} for {item.name}
+	</p>
 {/each}
