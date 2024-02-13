@@ -7,7 +7,11 @@
 	let items = $derived(data.items);
 	let votes = $derived(data.votes);
 
-	let remaining = $derived(items.filter((item) => !votes.some((vote) => vote.item.id === item.id)));
+	let remaining = $derived(
+		items.filter(
+			(item) => !votes.some((vote) => vote.user.id === data.user.id && vote.item.id === item.id)
+		)
+	);
 	let current = $derived(remaining[0]);
 </script>
 

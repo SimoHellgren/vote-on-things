@@ -1,14 +1,18 @@
-export async function load({ params, locals: { supabase } }) {
+export async function load({ params, locals: { supabase, getSession } }) {
+    const session = await getSession();
+    const user = session.user;
+
     const { data: items } = await supabase.from("item").select().eq('list_id', params.id);
     const { data: list } = await supabase.from("list").select().eq('id', params.id).single();
     const { data: votes } = await supabase.from("itemvote").select(`
         item(id, name),
-        user:profiles(email),
+        user:profiles(id, email),
         result
     `).eq('list_id', params.id);
 
     return {
         list,
+        user,
         items: items ?? [],
         votes: votes ?? [],
     };
