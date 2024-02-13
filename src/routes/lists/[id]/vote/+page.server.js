@@ -51,5 +51,16 @@ export const actions = {
 
         if (error) console.error(error);
 
+    },
+
+    removeAllOwnVotes: async ({ params, locals: { supabase, getSession } }) => {
+        const session = await getSession();
+        const userId = session.user.id;
+
+        const listId = params.id;
+
+        const { error } = await supabase.from("itemvote").delete().eq('user_id', userId).eq('list_id', listId);
+
+        if (error) console.error(error);
     }
 }

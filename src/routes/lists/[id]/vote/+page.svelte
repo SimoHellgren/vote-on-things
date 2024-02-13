@@ -40,6 +40,10 @@
 	</div>
 {/each}
 
+<form method="POST" action="?/removeAllOwnVotes" use:enhance>
+	<button>Delete all my votes!</button>
+</form>
+
 <style>
 	form {
 		display: inline;
