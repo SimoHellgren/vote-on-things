@@ -5,6 +5,7 @@ export async function load({ params, locals: { supabase, getSession } }) {
     const { data: items } = await supabase.from("item").select().eq('list_id', params.id);
     const { data: list } = await supabase.from("list").select().eq('id', params.id).single();
     const { data: votes } = await supabase.from("itemvote").select(`
+        id,
         item(id, name),
         user:profiles(id, email),
         result
@@ -20,7 +21,7 @@ export async function load({ params, locals: { supabase, getSession } }) {
 
 
 export const actions = {
-    default: async ({ params, request, locals: { supabase, getSession } }) => {
+    castVote: async ({ params, request, locals: { supabase, getSession } }) => {
         const formData = await request.formData();
         const result = formData.get("result");
         const item_id = formData.get("id");
@@ -39,6 +40,16 @@ export const actions = {
         if (error) console.error(error);
 
         return data
+
+    },
+
+    removeVote: async ({ params, request, locals: { supabase, getSession } }) => {
+        const formData = await request.formData();
+        const voteId = formData.get("voteId");
+
+        const { error } = await supabase.from("itemvote").delete().eq('id', voteId);
+
+        if (error) console.error(error);
 
     }
 }

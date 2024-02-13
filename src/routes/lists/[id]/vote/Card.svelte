@@ -4,7 +4,7 @@
 	let { id, name } = $props();
 </script>
 
-<form method="POST" use:enhance>
+<form method="POST" action="?/castVote" use:enhance>
 	{name}
 	<input type="hidden" name="id" value={id} />
 	<button type="submit" name="result" value={true}>Yes</button>

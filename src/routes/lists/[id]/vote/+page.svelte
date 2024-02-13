@@ -1,6 +1,7 @@
 <script>
 	import Card from './Card.svelte';
 	import { fade } from 'svelte/transition';
+	import { enhance } from '$app/forms';
 
 	let { data } = $props();
 
@@ -27,8 +28,20 @@
 
 <h2>Votes</h2>
 
-{#each votes as { user, item, result }}
-	<p transition:fade={{ duration: 200 }}>
+{#each votes as { id, user, item, result }}
+	<div transition:fade={{ duration: 200 }}>
 		{user.email} voted {result ? 'Yes' : 'No'} for {item.name}
-	</p>
+		{#if user.id === data.user.id}
+			<form method="POST" action="?/removeVote" use:enhance>
+				<input type="hidden" name="voteId" value={id} />
+				<button>DELETE</button>
+			</form>
+		{/if}
+	</div>
 {/each}
+
+<style>
+	form {
+		display: inline;
+	}
+</style>
