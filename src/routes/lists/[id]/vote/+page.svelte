@@ -14,6 +14,12 @@
 		)
 	);
 	let current = $derived(remaining[0]);
+
+	const openDialog = (event) => {
+		event.preventDefault();
+		const dialog = document.getElementById('dialog');
+		dialog.showModal();
+	};
 </script>
 
 <a href={`/lists/${data.list.id}`}>Back to list <i>{data.list.name}</i></a>
@@ -41,7 +47,12 @@
 {/each}
 
 <form method="POST" action="?/removeAllOwnVotes" use:enhance>
-	<button>Delete all my votes!</button>
+	<button type="button" onclick={() => dialog.showModal()}>Delete all my votes!</button>
+	<dialog id="dialog">
+		Are you sure?
+		<button type="submit" onclick={() => dialog.close()}>Purge me brother!</button>
+		<button type="button" onclick={() => dialog.close()}>Nah</button>
+	</dialog>
 </form>
 
 <style>
