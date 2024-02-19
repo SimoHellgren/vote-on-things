@@ -14,12 +14,6 @@
 		)
 	);
 	let current = $derived(remaining[0]);
-
-	const openDialog = (event) => {
-		event.preventDefault();
-		const dialog = document.getElementById('dialog');
-		dialog.showModal();
-	};
 </script>
 
 <a href={`/lists/${data.list.id}`}>Back to list <i>{data.list.name}</i></a>
